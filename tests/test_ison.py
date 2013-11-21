@@ -105,7 +105,7 @@ class TestConics(unittest.TestCase):
       et = spice.str2et( jdtt )
       conicState = spice.conics( self.elts, et )
       print( conicState )
-      print( pos+vel )
+      print(( pos+vel ))
       self.assertAlmostEqual( spice.vdist(conicState[:3], pos), 0.0, places=3)
 
 

@@ -3,7 +3,7 @@
 import re
 import os
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import pexpect
 
 nl='\n'
@@ -96,7 +96,7 @@ def gomain(target):
       msgs[0] = 'Horizons lookup status=%d, URL=%s' % (r,url,)
 
       msgs[1] = 'SPK retrieval FAILED'
-      msgs[1] = '### Retrieved SPK (URL=%s) as %s' % (url, urllib.urlretrieve(url,fn)[0],)
+      msgs[1] = '### Retrieved SPK (URL=%s) as %s' % (url, urllib.request.urlretrieve(url,fn)[0],)
 
       msgs[2] = 'SPICE Body ID FAILED'
       spiceId,status = brief(fn)
@@ -110,5 +110,5 @@ def gomain(target):
 if __name__=="__main__":
   for itarget in sys.argv[1:]:
     itarget = itarget.strip()
-    print( gomain(itarget) )
+    print(( gomain(itarget) ))
     

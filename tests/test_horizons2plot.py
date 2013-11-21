@@ -75,7 +75,7 @@ kernels/spk_drm239_WithBurn-full.bsp
 
     valarrs.sort()
     for valarr in valarrs:
-      print( '%12.1f %9.3f %9.3f %7.2f %7.2f %s' % valarr[1:] )
+      print(( '%12.1f %9.3f %9.3f %7.2f %7.2f %s' % valarr[1:] ))
 
     days = [i[1]/spd for i in valarrs]
 
