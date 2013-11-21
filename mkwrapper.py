@@ -16,7 +16,7 @@
 import os, sys
 import traceback
 import pprint
-from cStringIO import StringIO
+from io import StringIO
 
 spiceintType = 'BAD'
 spiceintType1 = 'B'
@@ -103,7 +103,7 @@ OUTPUT_TYPE = 1
 INOUTPUT_TYPE = 2
 
 IOTYPE = { 'I':INPUT_TYPE, 'O':OUTPUT_TYPE, 'I/O': INOUTPUT_TYPE, 'I-O': INOUTPUT_TYPE, 'I,O': INOUTPUT_TYPE }
-IOTYPEkeys = IOTYPE.keys()
+IOTYPEkeys = list(IOTYPE.keys())
 
 def debug(string):
     if DEBUG: sys.stderr.write("%s\n" % str(string))
@@ -446,7 +446,7 @@ def gen_wrapper(prototype, buffer):
 
             except:
                 traceback.print_exc()
-                print( dict(func=funcnm,ioDict=ioDict,param=param) )
+                print(( dict(func=funcnm,ioDict=ioDict,param=param) ))
                 raise Exception("I don't know if %s is an input or output" % param)
 
         ### Disabled old code:
@@ -1027,7 +1027,7 @@ def parse_param(param):
 
             try:
                 param_obj.num_elements.append(int(t))
-            except Exception, msg:
+            except Exception as msg:
                 if t:
                     raise msg
                 param_obj.num_elements.append('')
@@ -1057,7 +1057,7 @@ def parse_param(param):
             param_obj.py_string = get_tuple_py_string(param_obj)
 
         return param_obj
-    except Exception, msg:
+    except Exception as msg:
         if type == 'void':
             return None
         else:
@@ -1193,7 +1193,7 @@ def main(cspice_toolkit):
     # preprocess the header file
     output = StringIO()
     run_command('gcc -E %s | tee spiceusr.i' % cspice_header, output)
-    output.reset()
+    output.seek(0)
 
     used_prototypes = 0
     total_prototypes = 0;
@@ -1301,4 +1301,4 @@ if __name__ == '__main__':
     else:
         sys.exit('Please provide the path to the unpacked cspice toolkit directory')
 
-    print main(cspice_toolkit)
+    print(main(cspice_toolkit))

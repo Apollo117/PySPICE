@@ -34,7 +34,7 @@ class Cell(object):
         elif dtLcl==DataType.SPICE_TIME: v = 0.0
         elif dtLcl==DataType.SPICE_BOOL: v = True
         else: 
-            raise TypeError, 'Invalid type:  %s' % (str(dtArg),)
+            raise TypeError('Invalid type:  %s' % (str(dtArg),))
         self.dtype = dtArg
         self.length = lenLcl
         self.size = szArg

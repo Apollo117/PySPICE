@@ -42,7 +42,7 @@ In Python:
 import re
 import os
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import subprocess
 
 ########################################################################
@@ -109,7 +109,7 @@ Index of http://naif.jpl.nasa.gov/pub/naif/toolkit/C/:
 
   ### Suffix:  32bit or 64bit:
 
-  lsmi=len(str(sys.maxint))
+  lsmi=len(str(sys.maxsize))
 
   ### 32-bit architecture will have sys.maxint = 2^32 - 1 ~  2G = 10 digits
   ### 64-bit architecture will have sys.maxint = 2^64 - 1 ~ 16E = 19 digits
@@ -204,7 +204,7 @@ def main(argv):
   ### Get URL and open as stream
 
   nstkurl = getnstkurl(force=testOption,log=True)
-  zurl = urllib.urlopen( nstkurl )
+  zurl = urllib.request.urlopen( nstkurl )
 
   if nstkurl[-4:].lower()=='.zip':
 
@@ -212,7 +212,7 @@ def main(argv):
     ### and use zipfile.ZipFile to extract cspice/
 
     import zipfile
-    from StringIO import StringIO
+    from io import StringIO
 
     sys.stderr.write( "### Downloading %s this may take a while ..." % (nstkurl,) )
     sys.stderr.flush()
@@ -226,11 +226,11 @@ def main(argv):
       filepath=info.filename
       if os.path.dirname(filepath)[:7]=='cspice/':
         if actionOption=='list':
-          print( os.path.join( topdirOption, filepath ) )
+          print(( os.path.join( topdirOption, filepath ) ))
         elif actionOption=='extract':
           zf.extract(member=filepath,path=topdirOption)
 
-    print( "### %sing complete" % (actionOption,) )
+    print(( "### %sing complete" % (actionOption,) ))
 
   else:
     ### If URL is not a .ZIP file, assume it is .tar.Z, and

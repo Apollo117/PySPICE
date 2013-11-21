@@ -62,9 +62,9 @@ def find_libs():
 def make_spice_module():
     if not os.path.exists(MODULE_PATH):
         import mkwrapper
-        print 'making wrapper'
+        print('making wrapper')
         f = open(MODULE_PATH, 'wb')
-        f.write(mkwrapper.main(CSPICE_SRC))
+        f.write(bytes(mkwrapper.main(CSPICE_SRC), 'UTF-8'))
         f.close()
 
 def cleanup():

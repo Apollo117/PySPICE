@@ -1,7 +1,10 @@
 SPICE toolkit Python Module
 ===========================
 
-Python wrapper around the NAIF CSPICE library.  Released under the BSD license, see LICENSE for details.
+Python 3 wrapper around the NAIF CSPICE library.  Released under the BSD license, see LICENSE for details.
+
+!UNTESTED!
+
 
 Building PySPICE
 ----------------

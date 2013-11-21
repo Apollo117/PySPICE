@@ -3,5 +3,5 @@ spicemodule.c*
 build
 *.pyc
 cspice
-SMAP_ref_150529_180529.bsp
-makespk05
+*.bak
+__pycache__
