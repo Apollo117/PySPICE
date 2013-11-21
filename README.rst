@@ -4,6 +4,7 @@ SPICE toolkit Python 3 Module
 Python 3 wrapper around the NAIF CSPICE library.  Released under the BSD license, see LICENSE for details.
 
 !UNTESTED!
+Note that this does not work yet, as of 11/21/13, if you don't see this text than yay it is working!
 
 
 Building PySPICE
@@ -58,14 +59,7 @@ or *csh::
 Usage
 =====
 
-  berto:~$ python
-  Python 2.4.2 (#2, Sep 30 2005, 21:19:01)
-  [GCC 4.0.2 20050808 (prerelease) (Ubuntu 4.0.1-4ubuntu8)] on linux2
-  Type "help", "copyright", "credits" or "license" for more information.
-  >>> from spice import *
-  >>> furnsh("/home/berto/tmp/insitu/kernels/load.mk")
-  >>> utc2et("2004-06-11T19:32:00")
-  140254384.18462521
+TO BE ADDED...
 
 Some things to keep in mind
 ---------------------------
@@ -89,20 +83,20 @@ But, in Python, the outputs are returned::
 
   et = utc2et(utc)
 
-  print "et: %f" % et
+  print("et: %f" % et)
 
 If a function returns multiple values they are returned in a tuple::
 
   target_pos, light_time = spkpos(target, sc_et, frame, aberration, sc_name)
 
-  print "light time: %f" % light_time
-  print "xyz: [%e, %e, %e]" % target_pos
+  print("light time: %f" % light_time)
+  print("xyz: [%e, %e, %e]" % target_pos)
 
 In the case above, the target position and light time are returned in a tuple.
 Additionally, target_pos itself is a tuple; its individual elements can be
 accessed like this::
 
-  print "x position: %d" % target_pos[0]
+  print("x position: %d" % target_pos[0])
 
 Tuples act just like arrays.
 
