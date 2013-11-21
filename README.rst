@@ -1,4 +1,4 @@
-SPICE toolkit Python Module
+SPICE toolkit Python 3 Module
 ===========================
 
 Python 3 wrapper around the NAIF CSPICE library.  Released under the BSD license, see LICENSE for details.
