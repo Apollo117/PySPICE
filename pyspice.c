@@ -120,7 +120,7 @@ PyObject * get_py_cell_freeopt(SpiceCell *cell, int dofree)
     if ( !(pybase = PyObject_GetAttrString( py_obj, "base")) ) RTNNULL
     if ( !(pydata = PyObject_GetAttrString( py_obj, "data")) ) RTNNULL
 
-#   define XI(ATTR) PyObject_SetAttrString(py_obj, #ATTR, PyInt_FromLong((long)cell->ATTR));
+#   define XI(ATTR) PyObject_SetAttrString(py_obj, #ATTR, PyLong_FromLong((long)cell->ATTR));
 #   define XB(ATTR) PyObject_SetAttrString(py_obj, #ATTR, get_py_boolean(&cell->ATTR) );
     XI(dtype)
     XI(length)
@@ -130,7 +130,7 @@ PyObject * get_py_cell_freeopt(SpiceCell *cell, int dofree)
     XB(adjust)
     XB(init)
     //printf( " after:" );
-    //printf( "Cell.card=%ld",   PyInt_AsLong( PyObject_GetAttrString(py_obj, "card") ) );
+    //printf( "Cell.card=%ld",   PyLong_AsLong( PyObject_GetAttrString(py_obj, "card") ) );
     //printf( "; Cell.init=%s",   PyObject_GetAttrString(py_obj,"init")==Py_True?" True":"False" );
     //printf( "; cell->card=%ld",   (long)cell->card);
     //printf( "; cell->init=%s",   cell->init?"True ":"False");
@@ -143,7 +143,7 @@ PyObject * get_py_cell_freeopt(SpiceCell *cell, int dofree)
     case SPICE_CHR:
 
       for ( i=0; i<(SPICE_CELL_CTRLSZ+cell->size); ++i ) {
-        if ( !(pyitem = PyString_FromStringAndSize( cell->base+(i*itemLen), (Py_ssize_t)cell->length)) ) RTNNULL
+        if ( !(pyitem = PyBytes_FromStringAndSize( cell->base+(i*itemLen), (Py_ssize_t)cell->length)) ) RTNNULL
         if ( -1==PyList_SetItem( i<SPICE_CELL_CTRLSZ ? pybase : pydata, i - (i<SPICE_CELL_CTRLSZ?0:SPICE_CELL_CTRLSZ), pyitem ) ) RTNNULL
         pyitem = NULL;
       }
@@ -152,7 +152,7 @@ PyObject * get_py_cell_freeopt(SpiceCell *cell, int dofree)
     case SPICE_INT:
 
       for ( i=0; i<(SPICE_CELL_CTRLSZ+cell->size); ++i ) {
-        if ( !(pyitem = PyInt_FromLong( (long) ((SpiceInt*)cell->base)[i] ) ) ) RTNNULL
+        if ( !(pyitem = PyLong_FromLong( (long) ((SpiceInt*)cell->base)[i] ) ) ) RTNNULL
         if ( -1==PyList_SetItem( i<SPICE_CELL_CTRLSZ ? pybase : pydata, i - (i<SPICE_CELL_CTRLSZ?0:SPICE_CELL_CTRLSZ), pyitem ) ) RTNNULL
         pyitem = NULL;
       }
@@ -225,7 +225,7 @@ PyObject* pySubo;
     pySubo = PyObject_GetAttrString( pyo, attr );
     if ( !pySubo ) return 0;
     Py_DECREF( pySubo );
-    if ( PyInt_Check(pySubo) ) { *ptr = (SpiceCellDataType) PyInt_AsLong(pySubo); return 1; }
+    if ( PyLong_Check(pySubo) ) { *ptr = (SpiceCellDataType) PyLong_AsLong(pySubo); return 1; }
     if ( PyLong_Check(pySubo) ) { *ptr = (SpiceCellDataType) PyLong_AsDouble(pySubo); return 1; }
     return 0;
 }
@@ -236,7 +236,7 @@ PyObject* pySubo;
     if ( !pySubo ) return 0;
     Py_DECREF( pySubo );
     if ( PyFloat_Check(pySubo) ) { *ptr = (SpiceDouble) PyFloat_AsDouble(pySubo); return 1; }
-    if ( PyInt_Check(pySubo) ) { *ptr = (SpiceDouble) PyInt_AsLong(pySubo); return 1; }
+    if ( PyLong_Check(pySubo) ) { *ptr = (SpiceDouble) PyLong_AsLong(pySubo); return 1; }
     if ( PyLong_Check(pySubo) ) { *ptr = (SpiceDouble) PyLong_AsDouble(pySubo); return 1; }
     return 0;
 }
@@ -246,7 +246,7 @@ PyObject* pySubo;
     pySubo = PyObject_GetAttrString( pyo, attr );
     if ( !pySubo ) return 0;
     Py_DECREF( pySubo );
-    if ( PyInt_Check(pySubo) ) { *ptr = (SpiceInt) PyInt_AsLong(pySubo); return 1; }
+    if ( PyLong_Check(pySubo) ) { *ptr = (SpiceInt) PyLong_AsLong(pySubo); return 1; }
     if ( PyLong_Check(pySubo) ) { *ptr = (SpiceInt) PyLong_AsLong(pySubo); return 1; }
     if ( PyFloat_Check(pySubo) ) { *ptr = (SpiceInt) PyFloat_AsDouble(pySubo); return 1; }
     return 0;
@@ -333,7 +333,7 @@ SpiceCell * get_spice_cell(PyObject *py_obj)
     case SPICE_CHR:
       for ( (pVoid=placeholder.base),i=0; i<(SPICE_CELL_CTRLSZ+placeholder.size); (pVoid+=itemLen),++i ) {
         GETPYBASEORDATA
-        if ( -1==PyString_AsStringAndSize( pyobj, &pChr, &pysz) ) RTNNULL
+        if ( -1==PyBytes_AsStringAndSize( pyobj, &pChr, &pysz) ) RTNNULL
         psChr = pVoid;
         minLen = ((int)pysz) < itemLen ? (int)pysz : itemLen;
         for (j=0; j<minLen; ++j) *(psChr++) = (SpiceChar) *(pChr++);
@@ -344,7 +344,7 @@ SpiceCell * get_spice_cell(PyObject *py_obj)
       for ( (pVoid=placeholder.base),i=0; i<(SPICE_CELL_CTRLSZ+placeholder.size); (pVoid+=itemLen),++i ) {
         GETPYBASEORDATA
         psInt = pVoid;
-        if ( -1==(*psInt=(SpiceInt)PyInt_AsLong( pyobj )) ) if ( PyErr_Occurred() ) RTNNULL
+        if ( -1==(*psInt=(SpiceInt)PyLong_AsLong( pyobj )) ) if ( PyErr_Occurred() ) RTNNULL
       }
       break;
 
@@ -352,7 +352,7 @@ SpiceCell * get_spice_cell(PyObject *py_obj)
       for ( (pVoid=placeholder.base),i=0; i<(SPICE_CELL_CTRLSZ+placeholder.size); (pVoid+=itemLen),++i ) {
         GETPYBASEORDATA
         psDbl = pVoid;
-        if ( -1.0==(*psDbl=(SpiceDouble)PyInt_AsLong( pyobj )) ) if ( PyErr_Occurred() ) RTNNULL
+        if ( -1.0==(*psDbl=(SpiceDouble)PyLong_AsLong( pyobj )) ) if ( PyErr_Occurred() ) RTNNULL
       }
       break;
 

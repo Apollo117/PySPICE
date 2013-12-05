@@ -92,9 +92,9 @@ try:
     )
 
     setup(
-        name = 'Spice',
-        version = '1.0',
-        description = 'Spice Wrapper Module',
+        name = 'PySPICE',
+        version = '2.0',
+        description = 'Spice Wrapper Module for Python 3',
         packages = ['spice'],
         ext_modules = [module1]
     )

@@ -1278,12 +1278,24 @@ PyMethodDef methods[] = {
   {NULL, NULL},
 };
 
+static struct PyModuleDef spicemodule = {
+        PyModuleDef_HEAD_INIT,
+        "_spice",
+        NULL,
+        -1,
+        methods,
+        NULL,
+        NULL,
+        NULL,
+        NULL
+};
+
 void init_spice(PyObject *self)
 {
   PyObject *m = NULL;
 
-  m = Py_InitModule("_spice", methods);
-
+  //m = Py_InitModule("_spice", methods);
+  m = PyModule_Create(&spicemodule);
   /* Don't allow an exception to stop execution */
   erract_c("SET", 0, "RETURN");
   //errdev_c("SET", 0, "NULL");
