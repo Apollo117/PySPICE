@@ -1280,31 +1280,37 @@ PyMethodDef methods[] = {
 
 static struct PyModuleDef spicemodule = {
         PyModuleDef_HEAD_INIT,
-        "_spice",
-        NULL,
-        -1,
-        methods,
-        NULL,
-        NULL,
-        NULL,
-        NULL
+        "_spice",   /* m_name */
+        NULL,       /* m_doc */
+        -1,         /* m_size */
+        methods,    /* m_methods */
+        NULL,       /* m_reload */
+        NULL,       /* m_traverse */
+        NULL,       /* m_clear */
+        NULL,       /* m_free */
 };
 
-void init_spice(PyObject *self)
+static PyObject * init_spice(void)
 {
   PyObject *m = NULL;
 
-  //m = Py_InitModule("_spice", methods);
-  m = PyModule_Create(&spicemodule);
+  //m = PyModule_Create("_spice", methods);
+  m = PyModule_Create(&moduledef);
   /* Don't allow an exception to stop execution */
   erract_c("SET", 0, "RETURN");
   //errdev_c("SET", 0, "NULL");
 
-  SpiceException = \
-    PyErr_NewException("_spice.SpiceException", PyExc_Exception, NULL);
+  SpiceException =     PyErr_NewException("_spice.SpiceException", PyExc_Exception, NULL);
   Py_INCREF(SpiceException);
 
   PyModule_AddObject(m, "SpiceException", SpiceException);
+  return m;
+};
+
+PyMODINIT_FUNC
+PyInit__spice(void)
+{
+  return init_spice();
 }""" % (buffer.getvalue(), module_methods.getvalue())
 
 if __name__ == '__main__':
