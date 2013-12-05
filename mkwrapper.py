@@ -1294,7 +1294,7 @@ static PyObject * init_spice(void)
 {
   PyObject *m = NULL;
 
-  m = PyModule_Create(&moduledef);
+  m = PyModule_Create(&spicemodule);
   /* Don't allow an exception to stop execution */
   erract_c("SET", 0, "RETURN");
 

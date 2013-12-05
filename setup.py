@@ -91,9 +91,9 @@ try:
         libraries = ['cspice'],
     )
 
-    setup(
-        name = 'PySPICE',
+    setup(name = 'PySPICE',
         version = '2.0',
+        author='Roberto Aguilar', #Give credit where credit is due. This is the origional Author, I mearly made it P3K compatible.
         description = 'Spice Wrapper Module for Python 3',
         packages = ['spice'],
         ext_modules = [module1]
