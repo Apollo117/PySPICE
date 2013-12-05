@@ -100,7 +100,7 @@ Index of http://naif.jpl.nasa.gov/pub/naif/toolkit/C/:
   ###   SUNOS and SUN4U => SunSPARC_Solaris
   ###
   
-  dSys1 = dict( OSX=dict( I386='MacIntel', PPC='MacPPC', sis2='OSX', zSfx='tar.Z' )
+  dSys1 = dict( OSX=dict( I386='MacIntel', X86_64='MacIntel', PPC='MacPPC', sis2='OSX', zSfx='tar.Z' )
               , LINUX=dict( I386='PC', X86_64='PC', sis2='Linux', zSfx='tar.Z' )
               , CYGWIN=dict( I386='PC', X86_64='PC', sis2='Cygwin', zSfx='tar.Z' )
               , WINDOWS=dict( I386='PC', X86_64='PC', sis2='Windows', zSfx='zip' )
@@ -275,4 +275,10 @@ if __name__=="__main__":
   """
   Usage:  python getnaiftoolkit.py [extract [topdir=subdir/]]
   """
-  main(sys.argv[1:])
+  if len(sys.argv) == 2:
+    main(sys.argv[1:])
+  else:
+    print("")
+    print("Error, this program requires one argument, the path where to extract csoice")
+    print("Usage:  python getnaiftoolkit.py [extract [topdir=subdir/]]")
+    print("")
