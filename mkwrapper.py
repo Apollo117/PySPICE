@@ -1294,13 +1294,11 @@ static PyObject * init_spice(void)
 {
   PyObject *m = NULL;
 
-  //m = PyModule_Create("_spice", methods);
   m = PyModule_Create(&moduledef);
   /* Don't allow an exception to stop execution */
   erract_c("SET", 0, "RETURN");
-  //errdev_c("SET", 0, "NULL");
 
-  SpiceException =     PyErr_NewException("_spice.SpiceException", PyExc_Exception, NULL);
+  SpiceException = PyErr_NewException("_spice.SpiceException", PyExc_Exception, NULL);
   Py_INCREF(SpiceException);
 
   PyModule_AddObject(m, "SpiceException", SpiceException);
