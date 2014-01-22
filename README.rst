@@ -4,7 +4,7 @@ SPICE toolkit Python 3 Module
 Python 3 wrapper around the NAIF CSPICE library.  Released under the BSD license, see LICENSE for details.
 
 !UNTESTED!
-Note that this does not work Fully yet, as of 12/04/13, some things run, some things clearly do not! 
+Note that this does not work Fully yet, as of 12/04/13, some things run, some things clearly do not! But do please test it and post issues.
 
 
 Building PySPICE
@@ -14,11 +14,11 @@ First, download the cspice toolkit and extract it to the directory "cspice" in
 this directory right alongside the setup.py file.  Once the cspice source is
 there, run setup.py like so::
 
-  python setup.py build_ext
+  python3 setup.py build_ext
 
 Then install::
 
-  python setup.py install
+  python3 setup.py install
 
 64 bit vs 32 bit
 ----------------
@@ -26,7 +26,7 @@ CSPICE is published in both 64 and 32 bit versions. Make sure that you compile
 PySPICE with a Python bit architecture that fits to the CSPICE you have
 downloaded, otherwise you will get warnings at compile time (not so bad) and
 errors of missing links in the library at run time (basically, you can't *import
-spice*.
+spice*).
 
 Manual Instructions
 -------------------
@@ -75,7 +75,7 @@ function::
 
   utc2et_c(utc, &et);
 
-  printf("et: %f\n", et);
+  print("et: %f\n", et);
 
 But, in Python, the outputs are returned::
 
